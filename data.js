@@ -10,10 +10,11 @@
 //   42 CFR 482.43, requires sending the information needed for post-discharge care).
 //
 // `find` is a list of patterns; the item counts as present if any matches.
+// `skipMedLines`: ignore matches on medication lines (a PRN "for agitation" is not a behavioral status).
 // `ask` is the callback question to the hospital when it is missing.
 const CHECKLIST = [
   // ----- study items -----
-  { id: "behavior", group: "Study: most often missing", label: "Behavioral status", source: "study", missing: 67.7, exact: true,
+  { id: "behavior", group: "Study: most often missing", label: "Behavioral status", source: "study", missing: 67.7, exact: true, skipMedLines: true,
     find: [/behavio(u)?r(al)?\s*(status|symptoms|issues|concerns|health|management|plan)/i, /\b(agitat|aggress|wander|sundown|exit[- ]seek|combative|resists care|redirect)/i, /\bno (behavio(u)?ral|behavior) (issues|concerns)/i],
     ask: "Any behaviors we should plan for (agitation, wandering, resisting care, sundowning)? What worked to manage them, and were any PRN or restraint orders used?" },
   { id: "social", group: "Study: most often missing", label: "Social status (lives with, caregiver, decision-maker)", source: "study", missing: 65.7, exact: true,
@@ -45,7 +46,7 @@ const CHECKLIST = [
     find: [/reason for (admission|hospitali[sz]ation)|admitting diagnosis|principal diagnosis|discharge diagnos|chief complaint|admitted (for|with)|presented with/i],
     ask: "What was the main reason for admission and the final diagnoses?" },
   { id: "course", group: "Clinical basics", label: "Hospital course", source: "practice",
-    find: [/hospital course|course of (illness|stay)|summary of (stay|hospitali[sz]ation)|during (the|this) (stay|admission|hospitali[sz]ation)/i],
+    find: [/^\s*(hospital )?course( of stay)?:/im, /hospital course|course of (illness|stay)|summary of (stay|hospitali[sz]ation)|during (the|this) (stay|admission|hospitali[sz]ation)/i],
     ask: "Could you send a brief summary of the hospital course?" },
   { id: "meds", group: "Clinical basics", label: "Discharge medication list", source: "practice",
     find: [/discharge medications?|medication list|medications? (on|at) discharge|home medications?|\bmeds\b|\bmg\b/i],

@@ -9,14 +9,18 @@ function snippet(text, m) {
 }
 
 function analyse(text) {
+  // medication lines (a dose like "25 mg") blanked out, keeping offsets, for items with skipMedLines
+  const noMeds = text.replace(/^.*\b\d+(\.\d+)?\s*(mg|mcg|g|units?|ml)\b.*$/gim, (l) => " ".repeat(l.length));
   const items = CHECKLIST.map((it) => {
     let hit = null;
-    for (const rx of it.find) { const m = text.match(rx); if (m) { hit = m; break; } }
+    for (const rx of it.find) { const m = (it.skipMedLines ? noMeds : text).match(rx); if (m) { hit = m; break; } }
     return { ...it, present: !!hit, evidence: hit ? snippet(text, hit) : "" };
   });
   const flags = [];
+  // skip trigger words that are negated just before ("no oxycodone", "not on antibiotics")
+  const negated = (m) => /\b(no|not on|not taking|without|denies|never on)\s+(\w+\s+){0,2}$/i.test(text.slice(Math.max(0, m.index - 40), m.index));
   for (const s of SAFETY) {
-    const m = text.match(s.when);
+    const m = [...text.matchAll(new RegExp(s.when.source, s.when.flags + "g"))].find((x) => !negated(x));
     if (m && !s.need.test(text)) flags.push({ ...s, evidence: snippet(text, m) });
   }
   // pending results without anyone named to follow them up

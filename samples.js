@@ -107,7 +107,7 @@ Follow-up: Stroke clinic in 4 weeks; PCP Dr. Mendez in 2 weeks.`,
   },
   {
     title: "Urinary infection with delirium (worst case)",
-    planted: ["opioid-script", "afterhours", "behavior", "code", "immun", "skin", "social", "followup"],
+    planted: ["opioid-script", "abx-stop", "afterhours", "behavior", "code", "immun", "skin", "social", "followup"],
     text: `METRO CITY HOSPITAL - DISCHARGE NOTE (SYNTHETIC)
 Patient: Demo Patient 5, 84M   11/08/2026 to 11/13/2026
 
