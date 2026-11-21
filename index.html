@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Discharge Gap Checker</title>
+<meta name="description" content="Paste a hospital discharge summary to see what a nursing home needs but didn't get, with safety flags and callback questions. Based on a national survey of SNF Directors of Nursing.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="wrap">
+  <p class="eyebrow">For skilled nursing facility admissions teams</p>
+  <h1>Discharge Gap Checker</h1>
+  <p class="lede">Paste a hospital discharge summary. See what your facility needs but didn't get, the safety gaps that cause first-night problems, and a ready list of callback questions for the hospital.
+    In a national survey, half of hospital–nursing home pairs routinely left out at least 1 in 5 key items, and nursing homes spent about 6.5 hours a week chasing them.</p>
+</header>
+
+<main class="wrap">
+  <section class="card no-print">
+    <div class="row"><span class="hint">Try a synthetic summary:</span><div id="samples" class="btns"></div></div>
+    <textarea id="summary" rows="12" placeholder="Paste the discharge summary here…" aria-label="Discharge summary"></textarea>
+    <div class="row"><button id="check">Check for gaps</button><span class="hint">Runs entirely in your browser; nothing is sent anywhere.</span></div>
+  </section>
+
+  <section id="results" hidden>
+    <div class="kpis" id="score"></div>
+    <div class="grid">
+      <section class="card">
+        <h2>Safety flags</h2>
+        <div id="flags"></div>
+        <h2 class="mt">Checklist</h2>
+        <div id="checklist"></div>
+      </section>
+      <section class="card sticky">
+        <h2>Callback questions</h2>
+        <p class="hint">Ordered by safety first, then by how often nursing homes report the item missing.</p>
+        <textarea id="call" rows="22" aria-label="Callback questions"></textarea>
+        <div class="row no-print"><button id="copy">Copy questions</button><button id="print" class="ghost">Print</button></div>
+      </section>
+    </div>
+  </section>
+
+  <section class="card about no-print">
+    <h2>Where the checklist comes from</h2>
+    <p>The 9 items marked with a percentage are the information types that Directors of Nursing most often reported as missing, in a survey covering 471 hospital–SNF pairs:
+      Adler-Milstein J, Raphael K, O'Malley TA, Cross DA. <a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2775075">Information Sharing Practices Between US Hospitals and Skilled Nursing Facilities to Support Care Transitions</a>. <i>JAMA Netw Open.</i> 2021;4(1):e2033980.
+      Percentages for the first six are from the article text; the last three are read from its Figure 2B. The other items are standard transition-of-care content.</p>
+    <p>Detection uses word patterns, so it can miss information written in an unusual way or count a passing mention. Treat it as a second pair of eyes, not a replacement for reading the summary. Sample summaries are synthetic.</p>
+  </section>
+</main>
+<footer class="wrap no-print">Not a medical device. Built by a clinician as a prototype for SNF admissions teams.</footer>
+<script src="data.js"></script>
+<script src="samples.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
